@@ -1,0 +1,22 @@
+/* Hilangkan border di sekitar item accordion */
+.accordion-item {
+  border: none !important;
+}
+
+/* Hilangkan icon panah di header */
+.accordion-button::after {
+  display: none !important;
+}
+
+/* Hilangkan efek background ungu & shadow saat aktif */
+.accordion-button:not(.collapsed) {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Opsional: Hilangkan border di header accordion */
+.accordion-button {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
