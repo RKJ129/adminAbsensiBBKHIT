@@ -8,8 +8,9 @@ import FeatherIcon from 'feather-icons-react';
 
 // assets
 import logoDark from 'assets/images/logo-dark.svg';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../contexts/AuthContext';
 
 // -----------------------|| SIGNIN 1 ||-----------------------//
 
@@ -18,9 +19,11 @@ export default function SignIn1() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validate, setValidate] = useState({});
+  const { verify } = useContext(AuthContext);
 
   const login = async () => {
     try {
+      console.log('Email : ', email);
       const { status } = await axios.post("http://localhost:3000/api/admin/login", {
         email: email,
         password: password
@@ -73,7 +76,10 @@ export default function SignIn1() {
                 {/* <Form.Group>
                   <Form.Check type="checkbox" className="text-left mb-4 mt-2" label="Save Credentials." defaultChecked />
                 </Form.Group> */}
-                <Button className="btn btn-block btn-primary mb-4" onClick={login}>Signin</Button>
+                <Button className="btn btn-block btn-primary mb-4" onClick={ async () => {
+                  await verify();
+                  await login();
+                }}>Signin</Button>
                 {/* <p className="mb-2 text-muted">
                   Forgot password?{' '}
                   <NavLink to="#" className="f-w-400">

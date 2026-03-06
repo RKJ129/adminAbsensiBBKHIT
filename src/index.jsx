@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // style + assets
 import './index.scss';
 import './views/rekap/rekap.css';
+import { AuthProvider } from './contexts/AuthContext';
 
 // -----------------------|| REACT DOM RENDER  ||-----------------------//
 
@@ -16,7 +17,9 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <ConfigProvider>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </ConfigProvider>
 );
 

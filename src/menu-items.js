@@ -63,7 +63,8 @@ const menuItems = {
           type: 'item',
           'icon': 'material-icons-two-tone',
           'iconname': 'map',
-          url: '/monitor-pegawai'
+          url: '/monitor-pegawai',
+          roles: ['superadmin']
         },
         {
           id: 'satpel',
@@ -71,7 +72,8 @@ const menuItems = {
           type: 'item',
           'icon': 'material-icons-two-tone',
           'iconname': 'location_city',
-          url: '/satpel'
+          url: '/satpel',
+          roles: ['superadmin']
         },
       ]
     }

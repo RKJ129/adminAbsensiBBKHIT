@@ -1,32 +1,41 @@
 // Dashboard Admin Absensi - index.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Table, Button, ProgressBar } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
+import axios from 'axios';
 
 export default function DashboardAdminAbsensi() {
+
+  const [attendances, setAttendances] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get('http://localhost:3000/api/admin/dashboard', { withCredentials: true });
+      setAttendances(data);
+
+    }
+    fetchData();
+  }, []);
+
   // -------------------- DUMMY DATA --------------------
-  const [attendanceSummary] = useState({
-    hadir: 42,
-    sakit: 3,
-    izin: 5,
-    terlambat: 7,
-    alpa: 2
+  const todaySummary = attendances?.todaySummary;
+  const attendanceSummary = {
+    hadir: todaySummary?.PRESENT ?? 0,
+    sakit: todaySummary?.SICK ?? 0,
+    izin: todaySummary?.EXCUSED ?? 0,
+    terlambat: todaySummary?.LATE ?? 0,
+    alpa: todaySummary?.ABSENT ?? 0
+  };
+
+  const satpelInfo = [];
+  attendances?.pegawaiSatpel.map(data => {
+    const satpel = {
+      nama: data.satpelName,
+      pegawai: data.totalPegawai,
+      hadir: data.hadir
+    }
+    satpelInfo.push(satpel);
   });
-
-  const [latestAttendance] = useState([
-    { nama: 'Andi', masuk: '07:58', keluar: '16:05', status: 'Hadir', satpel: 'Semayang' },
-    { nama: 'Budi', masuk: '08:30', keluar: '-', status: 'Terlambat', satpel: 'APT Pranoto' },
-    { nama: 'Citra', masuk: '-', keluar: '-', status: 'Sakit', satpel: 'Kariangau' },
-    { nama: 'Dewi', masuk: '07:55', keluar: '16:02', status: 'Hadir', satpel: 'Loktuan' },
-    { nama: 'Eko', masuk: '-', keluar: '-', status: 'Izin', satpel: 'Sungai Samarinda' }
-  ]);
-
-  const [satpelInfo] = useState([
-    { nama: 'Semayang', pegawai: 14, hadir: 12 },
-    { nama: 'APT Pranoto', pegawai: 10, hadir: 8 },
-    { nama: 'Loktuan', pegawai: 12, hadir: 11 },
-    { nama: 'Sungai Samarinda', pegawai: 8, hadir: 5 }
-  ]);
 
   // -------------------- CHART DATA --------------------
   const pieChartData = {
@@ -45,11 +54,18 @@ export default function DashboardAdminAbsensi() {
     }
   };
 
+  const chartData = [];
+  attendances?.weekly.map(data => {
+    const present = data.summary.PRESENT;
+    const late = data.summary.LATE;
+    chartData.push(present + late);
+  });
+
   const barChartData = {
     series: [
       {
         name: 'Jumlah Kehadiran',
-        data: [35, 40, 32, 45]
+        data: chartData
       }
     ],
     options: {
@@ -64,6 +80,17 @@ export default function DashboardAdminAbsensi() {
       }
     }
   };
+
+  // start status color map
+  const statusColor = {
+    Hadir: "bg-success",
+    Terlambat: "bg-info",
+    "Pulang SW": "bg-primary",
+    Izin: "bg-warning",
+    Sakit: "bg-danger",
+    Absen: "bg-secondary"
+  }
+  // end status color map
 
   // -------------------- UI LAYOUT --------------------
   return (
@@ -107,24 +134,14 @@ export default function DashboardAdminAbsensi() {
               </tr>
             </thead>
             <tbody>
-              {latestAttendance.map((row, idx) => (
+              {attendances?.kehadiranBaru.map((row, idx) => (
                 <tr key={idx}>
-                  <td>{row.nama}</td>
-                  <td>{row.masuk}</td>
-                  <td>{row.keluar}</td>
+                  <td className='capitalize'>{row.name}</td>
+                  <td>{row.time_in}</td>
+                  <td>{row.time_out}</td>
                   <td>
                     <span
-                      className={`badge ${
-                        row.status === 'Hadir'
-                          ? 'bg-success'
-                          : row.status === 'Terlambat'
-                          ? 'bg-info'
-                          : row.status === 'Sakit'
-                          ? 'bg-danger'
-                          : row.status === 'Izin'
-                          ? 'bg-warning text-dark'
-                          : 'bg-secondary'
-                      }`}
+                    className={ `badge ${ statusColor[row.status] ?? "bg-secondary" }` }
                     >
                       {row.status}
                     </span>

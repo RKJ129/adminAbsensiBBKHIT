@@ -8,13 +8,15 @@ import FeatherIcon from 'feather-icons-react';
 
 // assets
 import avatar2 from 'assets/images/user/avatar-2.jpg';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../../../contexts/AuthContext';
 
 // -----------------------|| NAV RIGHT ||-----------------------//
 
 export default function NavRight() {
   const [user, setUser] = useState({});
+  const { logout, userRole } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,14 +36,20 @@ export default function NavRight() {
 
   const navigate = useNavigate();
 
-  const logout = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/admin/logout', { withCredentials: true });
-      navigate('/login');
-    } catch (error) {
-      console.error(error);
-    }
+  // const logout = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:3000/api/admin/logout', { withCredentials: true });
+  //     navigate('/login');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
   }
+
   return (
     <ListGroup as="ul" bsPrefix=" " className="list-unstyled">
       <ListGroup.Item as="li" bsPrefix=" " className="pc-h-item">
@@ -65,7 +73,7 @@ export default function NavRight() {
             <img src={ `http://localhost:3000/image/${user.photo_url ?? 'default-profile.jpeg'} ` } alt="userimage" className="user-avatar" />
             <span>
               <span className="user-name text-capitalize">{ user.username }</span>
-              <span className="user-desc">Administrator</span>
+              <span className="user-desc">{ userRole == 'admin' ? 'Administrator' : 'Superadmin' }</span>
             </span>
           </Dropdown.Toggle>
           <Dropdown.Menu className="dropdown-menu-end pc-h-dropdown">
@@ -80,7 +88,7 @@ export default function NavRight() {
             {/* <Link to="/auth/signin-2" className="dropdown-item">
               <i className="feather icon-lock" /> Lock Screen
             </Link> */}
-            <Link to="#" className="dropdown-item" onClick={logout}>
+            <Link to="#" className="dropdown-item" onClick={handleLogout}>
               <i className="material-icons-two-tone">chrome_reader_mode</i> Logout
             </Link>
           </Dropdown.Menu>
