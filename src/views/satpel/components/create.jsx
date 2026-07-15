@@ -4,6 +4,7 @@ import { Button, Form, Modal, Stack } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvent } from "react-leaflet";
 import axios from "axios";
+import { apiKey } from "../../../utils/env";
 
 
 export default function CreateSatpel ({ onStore }) {
@@ -24,7 +25,7 @@ export default function CreateSatpel ({ onStore }) {
 
     async function handleSubmit () {
         try {
-            await axios.post('http://localhost:3000/api/admin/satpel/store', {
+            await axios.post(`${apiKey}/api/admin/satpel/store`, {
                 name: name,
                 lat: position[0],
                 lng: position[1]

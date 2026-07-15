@@ -26,6 +26,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { ExcelExport, PDFExport } from './components';
 import Stack from '@mui/material/Stack';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
@@ -130,7 +131,7 @@ export default function RekapAbsensi() {
   
   useEffect(() => {
     const getRekap = async () => {
-      const { data } = await axios.get('http://localhost:3000/api/admin/rekap', {
+      const { data } = await axios.get(`${apiKey}/api/admin/rekap`, {
         withCredentials: true,
         params: {
           month: selectedMonth,

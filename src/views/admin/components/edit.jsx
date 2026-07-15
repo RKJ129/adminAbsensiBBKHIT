@@ -5,6 +5,10 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { Form, Modal, Stack, Button } from "react-bootstrap";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { apiKey } from "../../../utils/env";
+>>>>>>> master
 
 function Edit ({ id, onUpdate }) {
     const [show, setShow] = useState(false);
@@ -21,7 +25,11 @@ function Edit ({ id, onUpdate }) {
 
     const editAdmin = async () => {
         try {
+<<<<<<< HEAD
             const { data } = await axios.get('http://localhost:3000/api/admin/manage/edit/' + id, {
+=======
+            const { data } = await axios.get(`${apiKey}/api/admin/manage/edit/` + id, {
+>>>>>>> master
                 withCredentials: true
             });
 
@@ -43,7 +51,11 @@ function Edit ({ id, onUpdate }) {
 
     const handleSubmit = async () => {
         try {
+<<<<<<< HEAD
             await axios.patch('http://localhost:3000/api/admin/manage/update/' + id, {
+=======
+            await axios.patch(`${apiKey}/api/admin/manage/update/` + id, {
+>>>>>>> master
                 username: username,
                 firstname: firstname,
                 lastname: lastname,

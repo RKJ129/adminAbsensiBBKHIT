@@ -2,6 +2,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiKey } from '../../../utils/env';
 
 export default function EditProfile ({ setProfile, setPreview }) {
 
@@ -14,7 +15,7 @@ export default function EditProfile ({ setProfile, setPreview }) {
 
     const indexProfile = useCallback(async () => {
         try {
-          const { data } = await axios.get('http://localhost:3000/api/admin/profile', { withCredentials: true });
+          const { data } = await axios.get(`${apiKey}/api/admin/profile`, { withCredentials: true });
           console.log('Profile data : ', data);
           setProfile(data.result);
           const payload = data.result;
@@ -36,7 +37,7 @@ export default function EditProfile ({ setProfile, setPreview }) {
 
     const updateProfile = async () => {
         try {
-        await axios.patch('http://localhost:3000/api/admin/profile/update', {
+        await axios.patch(`${apiKey}/api/admin/profile/update`, {
             username: username,
             firstname: firstname,
             lastname: lastname,

@@ -9,12 +9,13 @@ import axios from 'axios';
 
 import EditProfile from './components/editProfile';
 import ChangePassword from './components/changePassword';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
-  const [preview, setPreview] = useState("default-profile.jpeg");
+  const [preview, setPreview] = useState("default-profile.jpg");
   const [activeTab, setActiveTab] = useState("profile");
 
   const handleFileChange = async (e) => {
@@ -26,7 +27,7 @@ export default function Profile() {
     formData.append('photo', file);
 
     try {
-      const { data } = await axios.patch('http://localhost:3000/api/admin/profile/update-photo', formData, {
+      const { data } = await axios.patch(`${apiKey}/api/admin/profile/update-photo`, formData, {
         headers: {
           "Content-Type": 'multipart/form-data'
         },
@@ -98,7 +99,7 @@ export default function Profile() {
           </div>
           <div className='position-relative' style={{ marginBottom: '4.2rem' }}>
           <div className='position-absolute start-50 translate-middle' style={{ top: '-0.5rem' }}>
-            <Image src={'http://localhost:3000/image/' + preview} roundedCircle style={{ objectFit: 'cover' }} width='155px' height='155px' />
+            <Image src={`${apiKey}/image/` + preview} roundedCircle style={{ objectFit: 'cover' }} width='155px' height='155px' />
             <div 
               className=''
               style={{

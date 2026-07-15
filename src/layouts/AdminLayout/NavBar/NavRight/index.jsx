@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // react-bootstrap
 import { ListGroup, Dropdown, Form } from 'react-bootstrap';
+import { apiKey } from '../../../../utils/env';
 
 // third party
 import FeatherIcon from 'feather-icons-react';
@@ -21,7 +22,7 @@ export default function NavRight() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/admin/me', { withCredentials: true });
+        const response = await axios.get(`${apiKey}/api/admin/me`, { withCredentials: true });
         console.log('Berhasil set auth user');
 
         const payload = response.data.result;
@@ -38,7 +39,7 @@ export default function NavRight() {
 
   // const logout = async () => {
   //   try {
-  //     const response = await axios.get('http://localhost:3000/api/admin/logout', { withCredentials: true });
+  //     const response = await axios.get(`${apiKey}/api/admin/logout`, { withCredentials: true });
   //     navigate('/login');
   //   } catch (error) {
   //     console.error(error);
@@ -70,7 +71,7 @@ export default function NavRight() {
       <ListGroup.Item as="li" bsPrefix=" " className="pc-h-item">
         <Dropdown className="drp-user">
           <Dropdown.Toggle as="a" variant="link" className="pc-head-link arrow-none me-0 user-name">
-            <img src={ `http://localhost:3000/image/${user.photo_url ?? 'default-profile.jpeg'} ` } alt="userimage" className="user-avatar" />
+            <img src={ `${apiKey}/image/${user.photo_url ?? 'default-profile.jpg'} ` } className="user-avatar" />
             <span>
               <span className="user-name text-capitalize">{ user.username }</span>
               <span className="user-desc">{ userRole == 'admin' ? 'Administrator' : 'Superadmin' }</span>

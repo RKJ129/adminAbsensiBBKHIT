@@ -4,6 +4,7 @@ import { Button, Form, Modal, Stack } from "react-bootstrap";
 import { useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvent } from "react-leaflet";
 import axios from "axios";
+import { apiKey } from "../../../utils/env";
 
 
 export default function EditSatpel ({ id, onUpdate }) {
@@ -16,7 +17,7 @@ export default function EditSatpel ({ id, onUpdate }) {
 
     const initEdit = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:3000/api/admin/satpel/edit/${id}`, {
+            const { data } = await axios.get(`${apiKey}/api/admin/satpel/edit/${id}`, {
                 withCredentials: true
             });
             const payload = data.result;
@@ -37,7 +38,7 @@ export default function EditSatpel ({ id, onUpdate }) {
 
     async function handleSubmit () {
         try {
-            await axios.put(`http://localhost:3000/api/admin/satpel/update/${id}`, {
+            await axios.put(`${apiKey}/api/admin/satpel/update/${id}`, {
                 name: name,
                 lat: position[0],
                 lng: position[1]

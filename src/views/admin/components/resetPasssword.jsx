@@ -4,6 +4,10 @@ import LockResetIcon from '@mui/icons-material/LockReset';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { apiKey } from "../../../utils/env";
+>>>>>>> master
 
 const MySwal = withReactContent(Swal);
 
@@ -22,7 +26,11 @@ export default function ResetPasssword ({ id }) {
         }).then(async (result) => {
             if(result.isConfirmed) {
                 try {
+<<<<<<< HEAD
                     const { status } = await axios.post('http://localhost:3000/api/admin/manage/reset-password/' + id, {}, {
+=======
+                    const { status } = await axios.post(`${apiKey}/api/admin/manage/reset-password/` + id, {}, {
+>>>>>>> master
                         withCredentials: true
                     });
 

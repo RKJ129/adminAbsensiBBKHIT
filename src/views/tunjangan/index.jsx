@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Row, Col, Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { ExportExcelTunjangan } from './component';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
@@ -37,7 +38,7 @@ export default function TunjanganPegawai() {
 
   const getTunjangan = async (excel = "") => {
     try {
-      const { data } = await axios.get('http://localhost:3000/api/admin/tunjangan', {
+      const { data } = await axios.get(`${apiKey}/api/admin/tunjangan`, {
         params: {
           month: selectedMonth,
           year: selectedYear,

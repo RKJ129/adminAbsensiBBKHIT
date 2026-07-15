@@ -8,6 +8,10 @@ import ManageAdmin from '../views/admin';
 import TunjanganPegawai from '../views/tunjangan';
 import Profile from '../views/profile';
 import MonitorPegawai from '../views/monitor';
+<<<<<<< HEAD
+=======
+import { Navigate } from 'react-router-dom';
+>>>>>>> master
 
 const DashboardSales = lazy(() => import('../views/dashboard/index'));
 const DashboardAdminAbsensi = lazy(() => import('../views/dashboard/index'))
@@ -29,12 +33,17 @@ const Satpel = lazy(() => import('../views/satpel'));
 
 const MainRoutes = {
   // element
-  path: '/',
+  // path: '/',
   children: [
     {
       path: '/',
       element: <AdminLayout />,
       children: [
+        {
+          idex: true,
+          path: '/',
+          element: <Navigate to="/dashboard" replace />
+        },
         {
           index: true,
           path: '/dashboard',

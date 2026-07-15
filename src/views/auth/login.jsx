@@ -11,6 +11,7 @@ import logoDark from 'assets/images/logo-dark.svg';
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../contexts/AuthContext';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SIGNIN 1 ||-----------------------//
 
@@ -23,8 +24,8 @@ export default function SignIn1() {
 
   const login = async () => {
     try {
-      console.log('Email : ', email);
-      const { status } = await axios.post("http://localhost:3000/api/admin/login", {
+      // console.log('Email : ', email);
+      const { status } = await axios.post(`${apiKey}/api/admin/login`, {
         email: email,
         password: password
       }, {
@@ -33,16 +34,17 @@ export default function SignIn1() {
         },
         withCredentials: true
       });
-      console.log("Status : ", status);
+      // console.log("Status : ", status);
       if(status === 200) {
+        await verify();
         navigate('/dashboard');
       }
     } catch (error) {
       console.error("Login gagal : ", error.response);
       const { errors } = error.response.data;
-      const status = error.response?.status;
-      console.log('Status : ', status);
-      setValidate(errors);
+      // const status = error.response?.status;
+      // console.log('Status : ', status);
+      // setValidate(errors);
     }
   }
   
@@ -77,7 +79,6 @@ export default function SignIn1() {
                   <Form.Check type="checkbox" className="text-left mb-4 mt-2" label="Save Credentials." defaultChecked />
                 </Form.Group> */}
                 <Button className="btn btn-block btn-primary mb-4" onClick={ async () => {
-                  await verify();
                   await login();
                 }}>Signin</Button>
                 {/* <p className="mb-2 text-muted">

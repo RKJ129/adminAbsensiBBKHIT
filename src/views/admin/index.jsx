@@ -21,6 +21,7 @@ import IconButton from "@mui/material/IconButton";
 import Create from './components/create';
 import Edit from './components/edit';
 import ResetPasssword from './components/resetPasssword';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
@@ -31,7 +32,7 @@ export default function ManageAdmin() {
     
   const getAdmin = useCallback(async() => {
     try {
-      const { data } = await axios.get('http://localhost:3000/api/admin/manage/index', {
+      const { data } = await axios.get(`${apiKey}/api/admin/manage/index`, {
         withCredentials: true
       });
   
@@ -44,7 +45,7 @@ export default function ManageAdmin() {
 
   const destroy = async (id) => {
     try {
-      await axios.delete('http://localhost:3000/api/admin/manage/destroy/' + id, { withCredentials: true });
+      await axios.delete(`${apiKey}/api/admin/manage/destroy/` + id, { withCredentials: true });
 
       getAdmin();
     } catch (error) {
@@ -96,7 +97,7 @@ export default function ManageAdmin() {
                     <TableRow key={index}>
                       <TableCell>
                       <div className='rounded-circle m-auto' style={{ width: '80px', height: '80px' }}>
-                        <img style={{ width: '100%', height: '100%' }} src='http://localhost:3000/image/default-profile.jpeg' />
+                        <img style={{ width: '100%', height: '100%' }} src={`${apiKey}/image/default-profile.jpeg`} />
                       </div>
                       </TableCell>
                       <TableCell>{ data.username }</TableCell>

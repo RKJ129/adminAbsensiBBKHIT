@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiKey } from '../utils/env';
 
 export const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const verify = async () => {
     try {
       const { data } = await axios.get(
-        'http://localhost:3000/api/admin/verify',
+        `${apiKey}/api/admin/verify`,
         { withCredentials: true }
       );
 
@@ -43,11 +44,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/admin/logout', { withCredentials: true });
+        const response = await axios.get(`${apiKey}/api/admin/logout`, { withCredentials: true });
         setAuth({
           loading: false,
           isAuthenticated: false,
-          role: null
+          userRole: null
         });
         // navigate('/login');
       } catch (error) {

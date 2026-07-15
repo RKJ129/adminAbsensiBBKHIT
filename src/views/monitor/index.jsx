@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { io } from 'socket.io-client';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
-const socket = io('http://localhost:3000');
+const socket = io(apiKey);
 
 export default function MonitorPegawai() {
 

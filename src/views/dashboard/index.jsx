@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Table, Button, ProgressBar } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import axios from 'axios';
+import { apiKey } from '../../utils/env';
+import { ExcelExport, PDFExport } from '../rekap/components';
 
 export default function DashboardAdminAbsensi() {
 
@@ -10,14 +12,14 @@ export default function DashboardAdminAbsensi() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get('http://localhost:3000/api/admin/dashboard', { withCredentials: true });
+      const { data } = await axios.get(`${apiKey}/api/admin/dashboard`, { withCredentials: true });
       setAttendances(data);
 
     }
     fetchData();
   }, []);
 
-  // -------------------- DUMMY DATA --------------------
+  // -------------------- DATA --------------------
   const todaySummary = attendances?.todaySummary;
   const attendanceSummary = {
     hadir: todaySummary?.PRESENT ?? 0,
@@ -159,12 +161,12 @@ export default function DashboardAdminAbsensi() {
         <Card.Header className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0">Rekap Absensi Bulanan</h5>
           <div>
-            <Button variant="outline-success" size="sm" className="me-2">
+            {/* <Button variant="outline-success" size="sm" className="me-2">
               Ekspor Excel
             </Button>
             <Button variant="outline-danger" size="sm">
               Ekspor PDF
-            </Button>
+            </Button> */}
           </div>
         </Card.Header>
         <Card.Body>

@@ -15,6 +15,7 @@ import axios from 'axios';
 import EditSatpel from './components/edit';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { apiKey } from '../../utils/env';
 
 // -----------------------|| SAMPLE ||-----------------------//
 
@@ -23,7 +24,7 @@ export default function Satpel() {
 
   const init = useCallback(async () => {
     try {
-      const { data } = await axios.get('http://localhost:3000/api/admin/satpel/index', {
+      const { data } = await axios.get(`${apiKey}/api/admin/satpel/index`, {
         withCredentials: true
       });
       const payload = data.result;
@@ -39,7 +40,7 @@ export default function Satpel() {
 
   const destroy = async (id) => {
     try {
-      await axios.delete('http://localhost:3000/api/admin/satpel/destroy/' + id, { withCredentials: true });
+      await axios.delete(`${apiKey}/api/admin/satpel/destroy/` + id, { withCredentials: true });
   
       init();
     } catch (error) {

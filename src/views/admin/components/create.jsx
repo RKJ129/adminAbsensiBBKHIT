@@ -7,6 +7,10 @@ import Form from 'react-bootstrap/Form';
 
 import { Modal, Stack, Button } from "react-bootstrap";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { apiKey } from "../../../utils/env";
+>>>>>>> master
 
 const CreateAdmin = ({ onStore }) => {
     const [show, setShow] = useState(false);
@@ -23,7 +27,11 @@ const CreateAdmin = ({ onStore }) => {
 
     const handleSubmit = async () => {
         try {
+<<<<<<< HEAD
             await axios.post('http://localhost:3000/api/admin/manage/store', {
+=======
+            await axios.post(`${apiKey}/api/admin/manage/store`, {
+>>>>>>> master
                 username: username,
                 firstname: firstname,
                 lastname: lastname,

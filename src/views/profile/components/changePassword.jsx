@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap"
+import { apiKey } from "../../../utils/env";
 
 
 export default function ChangePassword () {
@@ -12,7 +13,7 @@ export default function ChangePassword () {
 
     const handleChangePassword = async () => {
         try {
-            const { data } = await axios.patch('http://localhost:3000/api/admin/profile/change-password', {
+            const { data } = await axios.patch(`${apiKey}/api/admin/profile/change-password`, {
                 old_password: oldPassword,
                 new_password: newPassword,
                 confirm_password: confirmPassword,
